@@ -13,7 +13,7 @@
           <input placeholder="Email" type="email" />
         </div>
         <div>
-          <img src="../assets/rock.png">
+          <img src="../assets/key.png">
           <input placeholder="password" type="password" />
         </div>
         <div>

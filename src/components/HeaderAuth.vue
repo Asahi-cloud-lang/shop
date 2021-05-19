@@ -6,7 +6,7 @@
    </div>
    <div class="left center flex">
      <p @click="$router.push('/signup')">Registration</p>
-     <p @click="$router.push('/')">Login</p>
+     <p @click="$router.push('/login')">Login</p>
    </div>
  </div>
 </template>
