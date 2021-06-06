@@ -5,7 +5,7 @@
       <p>会員登録ありがとうございます</p>
       <div class="form">
         <div>
-          <button>ログインする</button>
+          <button @click="mypage">ログインする</button>
         </div>
       </div>
    </div>
@@ -17,6 +17,11 @@ import Header from "../components/Header";
 export default {
  components: {
    Header
+ },
+  methods: {
+   mypage(){
+      this.$router.push("/mypage");
+   }
  }
 };
 </script>
@@ -27,9 +32,11 @@ button {
  text-align: center;
  padding: 8px 0 10px;
  color: #fff;
- background-color: #5419da;
- border-radius: 25px;
  cursor: pointer;
+ margin: 15px;
+ background-color: blue;
+ border-radius: 10px;
+ border: none;
 }
 
 .card {
@@ -50,12 +57,4 @@ button {
  text-align: center;
  padding: 0px 30px 50px;
 }
-
-.form button {
- margin: 15px;
- background-color: blue;
- border-radius: 10px;
- border: none;
-}
-
 </style>

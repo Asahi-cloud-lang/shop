@@ -4,16 +4,16 @@
     <div class="card">
       <p>Login</p>
       <div class="form">
-        <div>
+        <div class="email-wrapper">
           <img src="../assets/mail.png">
-          <input placeholder="Email" type="email" />
+          <input placeholder="Email" type="email" v-model="email"/>
         </div>
-        <div>
+        <div class="password-wrapper">
           <img src="../assets/key.png">
-          <input placeholder="password" type="password" />
+          <input placeholder="password" type="password" v-model="password"/>
         </div>
-        <div>
-          <button>ログイン</button>
+        <div class="button-wrapper">
+          <button @click="auth">ログイン</button>
         </div>
       </div>
    </div>
@@ -23,9 +23,23 @@
 <script>
 import HeaderAuth from "../components/HeaderAuth";
 export default {
- components: {
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  components: {
    HeaderAuth
- }
+  },
+  methods: {
+    auth() {
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password,
+      });
+    },
+  },
 };
 </script>
 
@@ -35,9 +49,11 @@ button {
  text-align: center;
  padding: 8px 0 10px;
  color: #fff;
- background-color: #5419da;
- border-radius: 25px;
  cursor: pointer;
+ margin: 15px;
+ background-color: blue;
+ border-radius: 10px;
+ border: none;
 }
 .card {
  margin: 100px auto;
@@ -59,15 +75,15 @@ button {
  margin-top: 10px;
 }
 
-.form div:nth-child(1) {
+.email-wrapper {
  padding: 20px 10px 0px;
 }
 
-.form div:nth-child(2) {
+.password-wrapper {
  padding: 0px 10px 20px;
 }
 
-.form div:nth-child(3) {
+.button-wrapper {
  text-align: right;
 }
 
@@ -82,13 +98,6 @@ input {
 
 .form {
  text-align: center;
-}
-
-.form button {
- margin: 15px;
- background-color: blue;
- border-radius: 10px;
- border: none;
 }
 
 </style>

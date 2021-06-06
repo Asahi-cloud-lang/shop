@@ -4,19 +4,19 @@
     <div class="card">
       <p>Registration</p>
       <div class="form">
-        <div>
+        <div class="name-wrapper">
           <img src="../assets/person.png">
-          <input placeholder="Username" type="text" />
+          <input placeholder="Username" type="text" v-model="name"/>
         </div>
-        <div>
+        <div class="email-wrapper">
           <img src="../assets/mail.png">
-          <input placeholder="Email" type="email" />
+          <input placeholder="Email" type="email" v-model="email"/>
         </div>
-        <div>
+        <div class="password-wrapper">
           <img src="../assets/key.png">
-          <input placeholder="password" type="password" />
+          <input placeholder="password" type="password" v-model="password"/>
         </div>
-        <div>
+        <div class="button-wrapper">
           <button @click="auth">登録</button>
         </div>
       </div>
@@ -26,9 +26,34 @@
 
 <script>
 import HeaderAuth from "../components/HeaderAuth";
+import axios from "axios";
 export default {
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: ""
+    };
+  },
   components: {
     HeaderAuth
+  },
+  methods: {
+    auth() {
+      axios
+        .post("http://127.0.0.1:8000/api/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        })
+        .then(response => {
+          console.log(response);
+          this.$router.replace("/loginthanks");
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
   }
 };
 </script>
@@ -39,9 +64,11 @@ button {
   text-align: center;
   padding: 8px 0 10px;
   color: #fff;
-  background-color: #5419da;
-  border-radius: 25px;
   cursor: pointer;
+  margin: 15px;
+  background-color: blue;
+  border-radius: 10px;
+  border: none;
 }
 .card {
   margin: 100px auto;
@@ -74,26 +101,19 @@ input {
   margin-top: 10px;
 }
 
-.form div:nth-child(1) {
+.name-wrapper {
   padding: 20px 10px 0px;
 }
 
-.form div:nth-child(2) {
+.email-wrapper {
   padding: 10px 10px 10px;
 }
 
-.form div:nth-child(3) {
+.password-wrapper {
   padding: 0px 10px 20px;
 }
 
-.form div:nth-child(4) {
+.button-wrapper {
   text-align: right;
-}
-
-.form button {
-  margin: 15px;
-  background-color: blue;
-  border-radius: 10px;
-  border: none;
 }
 </style>
