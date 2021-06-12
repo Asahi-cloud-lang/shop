@@ -6,6 +6,7 @@ import SignUp from "../views/SignUp.vue";
 import Mypage from "../views/Mypage.vue";
 import LoginThanks from "../views/LoginThanks.vue";
 import ReservationThanks from "../views/ReservationThanks.vue";
+import ReservationEdit from "../views/ReservationEdit.vue";
 import Shop from "../views/Shop.vue";
 import store from "../store/store";
 
@@ -44,6 +45,15 @@ const routes = [
     path: "/reservationthanks",
     name: "ReservationThanks",
     component: ReservationThanks,
+  },
+  {
+    path: "/users/:id/reservation/:shopid",
+    name: "ReservationEdit",
+    component: ReservationEdit,
+    props: true,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/shops/:id",

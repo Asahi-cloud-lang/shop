@@ -1,6 +1,9 @@
 <template>
   <div>
     <Header />
+    <div class="logout-decoration">
+      <p @click="logout">Logout</p>
+    </div>
     <h1>{{ this.$store.state.user.name }}さん</h1>
     <div class="container">
       <div class="contents content-left">
@@ -34,6 +37,9 @@
               <td>{{ value.num_of_users }}人</td>
             </tr>
           </table>
+          <button @click="$router.push({ path: '/users/' + value.user_id + '/reservation/' + value.shop_id })" class="reservation-edit">
+            修正
+          </button>
         </div>
       </div>
       <div class="contents">
@@ -95,6 +101,12 @@ export default {
     };
   },
   methods: {
+    logout() {
+      this.$store.dispatch("logout", {
+        email: "",
+        password: "",
+      });
+    },
     deleteReservation(id) {
       axios
         .request({
@@ -315,5 +327,37 @@ td:first-child {
   padding: 15px;
   width: 35px;
   cursor: pointer;
+}
+
+.logout-decoration {
+  width: 95%;
+}
+
+.logout-decoration p{
+  right: auto;
+  font-size: 1.2rem;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  padding: 10px 0px; 
+  color: #fff;
+  background-color: rgb(53, 96, 246);
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin-left: auto;
+}
+
+.reservation-edit {
+  font-size: 0.8rem;
+  width: 80px;
+  padding: 4px 0px; 
+  color: rgb(68, 0, 255);
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+  margin: 15px auto 0px;
 }
 </style>
