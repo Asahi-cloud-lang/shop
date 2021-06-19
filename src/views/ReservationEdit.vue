@@ -81,9 +81,10 @@ export default {
     getUserReserved() {
     let data = [];
     axios.get(
-      "http://127.0.0.1:8000/api/users/" +
+      "https://agile-river-00378.herokuapp.com/api/users/" +
         this.$store.state.user.id +
-        "/reservations/" + this.$route.params['shopid'],
+        "/shops/" + this.$route.params['shopid'] +
+        "/reservations/" + this.$route.params['reservationid'],
       )
       .then((response) => {
         data.push(response.data);
@@ -111,12 +112,13 @@ export default {
       console.log(this.reserved_at)
       axios
         .put(
-          "http://127.0.0.1:8000/api/users/" +
+          "https://agile-river-00378.herokuapp.com/api/users/" +
             this.userReservedRestaurant[0].user_id +
             "/reservations/" +
             this.userReservedRestaurant[0].shop_id
             ,
           {
+            id: this.$route.params['reservationid'],
             reserved_at: this.reserved_at,
             num_of_users: this.num_of_users,
           }

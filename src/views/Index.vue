@@ -40,7 +40,7 @@
           :key="index"
         >
           <div class="card-shop">
-            <img :src="value.img" alt="#" width="180px" height="auto" />
+            <img :src="value.img" alt="#" width="200px" height="auto" />
             <p class="shop-name">{{ value.name }}</p>
             <p>#{{ value.area_name }} #{{ value.genre_name }}</p>
             <div class="card-footer">
@@ -121,7 +121,7 @@ export default {
     addLike(id) {
       axios
         .post(
-          "http://127.0.0.1:8000/api/shops/" +
+          "https://agile-river-00378.herokuapp.com/api/shops/" +
             id +
             "/likes",
           {
@@ -141,7 +141,7 @@ export default {
         .request({
           method: "delete",
           url:
-            "http://127.0.0.1:8000/api/shops/" +
+            "https://agile-river-00378.herokuapp.com/api/shops/" +
             id +
             "/likes",
           data: { user_id: this.$store.state.user.id },
@@ -156,7 +156,7 @@ export default {
     },
 
     getShops() {
-       axios.get("http://127.0.0.1:8000/api/shops").then((response) => {
+       axios.get("https://agile-river-00378.herokuapp.com/api/shops").then((response) => {
         const shops = response.data.data;
         shops.forEach((shop, index) => {
           shop.likes.forEach(like => {
@@ -198,8 +198,8 @@ h1 {
 }
 
 .container {
-  margin: 30px 50px;
-  width: 90%;
+  margin: 30px auto;
+  width: 95%;
 }
 
 .contents {
@@ -209,11 +209,11 @@ h1 {
 }
 
 .card-space {
-  margin: 0 10px 10px 0;
+  margin: 0 20px 20px 20px;
 }
 
 .card-shop {
-  width: 180px;
+  width: 200px;
   padding-bottom: 20px;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;

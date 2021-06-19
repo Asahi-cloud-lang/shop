@@ -117,7 +117,7 @@ export default {
       this.reservationDatetime = this.reservationDate + " " + this.reservationTime,
       axios
         .post(
-          " http://127.0.0.1:8000/api/shops/" +
+          "https://agile-river-00378.herokuapp.com/api/shops/" +
             this.id +
             "/reservations",
           {
@@ -133,7 +133,7 @@ export default {
         });
     },
     getShop() {
-      axios.get("http://127.0.0.1:8000/api/shops/" + this.id)
+      axios.get("https://agile-river-00378.herokuapp.com/api/shops/" + this.id)
         .then((response) => {
           this.restaurants = response.data.data;
           console.log(response.data.data);

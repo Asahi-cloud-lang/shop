@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import StarRating from 'vue-star-rating';
 import Index from "../views/Index.vue";
 import Login from "../views/Login.vue";
 import SignUp from "../views/SignUp.vue";
@@ -11,6 +12,7 @@ import Shop from "../views/Shop.vue";
 import store from "../store/store";
 
 Vue.use(VueRouter);
+Vue.use(StarRating);
 
 const routes = [
   {
@@ -47,7 +49,7 @@ const routes = [
     component: ReservationThanks,
   },
   {
-    path: "/users/:id/reservation/:shopid",
+    path: "/users/:id/shops/:shopid/reservation/:reservationid",
     name: "ReservationEdit",
     component: ReservationEdit,
     props: true,

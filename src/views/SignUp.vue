@@ -41,7 +41,7 @@ export default {
   methods: {
     auth() {
       axios
-        .post("http://127.0.0.1:8000/api/register", {
+        .post("https://agile-river-00378.herokuapp.com/api/register", {
           name: this.name,
           email: this.email,
           password: this.password

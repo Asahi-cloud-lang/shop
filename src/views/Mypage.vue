@@ -20,7 +20,7 @@
             </div>
 
             <img src="../assets/delete.png" class="delete-img"
-              @click="deleteReservation(value.shop_id)"
+              @click="deleteReservation(value.shop_id, value.id)"
             >
           </div>
           <table>
@@ -36,8 +36,11 @@
               <td>Number</td>
               <td>{{ value.num_of_users }}人</td>
             </tr>
+            <tr>
+              <star-rating @rating-selected="putStars(value.shop_id, value.num_of_stars)" v-model="value.num_of_stars" v-if="value.num_of_stars !== null && value.reserved_at.substring(0, 10) <= today " v-bind:star-size="20" class="star" :key="index" v-bind:show-rating="false"></star-rating>
+            </tr>
           </table>
-          <button @click="$router.push({ path: '/users/' + value.user_id + '/reservation/' + value.shop_id })" class="reservation-edit">
+          <button @click="$router.push({ path: '/users/' + value.user_id + '/shops/' + value.shop_id + '/reservation/' + value.id  })" class="reservation-edit">
             修正
           </button>
         </div>
@@ -85,18 +88,23 @@
 </template>
 
 <script>
+const d = new Date();
 import Header from "../components/Header";
 import axios from "axios";
+import StarRating from "vue-star-rating";
 export default {
   components: {
     Header,
+    StarRating,
   },
   props: ["id"],
   data() {
     return {
+      today: d.toISOString().split('T')[0],
       userReservedRestaurants: [],
       newUserReservedRestaurants: [],
       userLikeRestaurants: [],
+      rating: 0,
       show: true,
     };
   },
@@ -107,14 +115,15 @@ export default {
         password: "",
       });
     },
-    deleteReservation(id) {
+    deleteReservation(shopid,reservationid) {
       axios
         .request({
           method: "delete",
           url:
-            "http://127.0.0.1:8000/api/shops/" +
-            id +
-            "/reservations",
+            "https://agile-river-00378.herokuapp.com/api/shops/" +
+            shopid +
+            "/reservations/" +
+            reservationid,
           data: { user_id: this.$store.state.user.id },
         })
         .then((response) => {
@@ -130,7 +139,7 @@ export default {
         .request({
           method: "delete",
           url:
-            "http://127.0.0.1:8000/api/shops/" +
+            "https://agile-river-00378.herokuapp.com/api/shops/" +
             id +
             "/likes",
           data: { user_id: this.$store.state.user.id },
@@ -143,11 +152,10 @@ export default {
           });
         });
     },
-
     getUserReservedShops() {
       let data = [];
         axios.get(
-          "http://127.0.0.1:8000/api/users/" +
+          "https://agile-river-00378.herokuapp.com/api/users/" +
             this.$store.state.user.id +
             "/reservations"
         )
@@ -161,7 +169,7 @@ export default {
       let data = [];
       await axios
         .get(
-          "http://127.0.0.1:8000/api/users/" +
+          "https://agile-river-00378.herokuapp.com/api/users/" +
             this.$store.state.user.id +
             "/likes"
         )
@@ -169,6 +177,23 @@ export default {
           data.push(response.data);
           this.userLikeRestaurants = data[0].data;
           console.log(this.userLikeRestaurants);
+        });
+    },
+    putStars(shopid, stars){
+      axios
+        .put(
+          "https://agile-river-00378.herokuapp.com/api/users/" +
+            this.$store.state.user.id +
+            "/evaluations/" +
+            shopid
+            ,
+          {
+            num_of_stars: stars,
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          this.$router.push("/mypage");
         });
     },
   },
@@ -359,5 +384,10 @@ td:first-child {
   text-align: center;
   display: block;
   margin: 15px auto 0px;
+}
+
+.star {
+  margin: 20px 0px 10px;
+  cursor: pointer;
 }
 </style>
