@@ -152,9 +152,9 @@ export default {
           });
         });
     },
-    getUserReservedShops() {
+    async getUserReservedShops() {
       let data = [];
-        axios.get(
+        await axios.get(
           "https://agile-river-00378.herokuapp.com/api/users/" +
             this.$store.state.user.id +
             "/reservations"
